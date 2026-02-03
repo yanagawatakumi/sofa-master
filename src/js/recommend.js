@@ -31,7 +31,7 @@
 
     async function fetchRecommend(payload) {
         if (window.debugMode) {
-            throw new Error('デバッグモード: おすすめ取得エラー');
+            return fetchRecommendFromLocal(payload);
         }
         const response = await fetch('/api/recommend', {
             method: 'POST',
@@ -45,6 +45,20 @@
         const data = await response.json();
         state.results = data.results || [];
         return data;
+    }
+
+    async function fetchRecommendFromLocal(payload) {
+        const response = await fetch('data/sofas.json');
+        if (!response.ok) {
+            throw new Error('ローカルソファデータの取得に失敗しました');
+        }
+        const data = await response.json();
+        const sofas = data.sofas || [];
+        const results = sofas.slice(0, 5).map((sofa, index) => ({
+            ...sofa,
+            matchScore: 90 - index * 7,
+        }));
+        return { results, relaxed: false };
     }
 
     async function refreshRecommend() {
@@ -293,23 +307,24 @@
                     if (resultImg) resultImg.style.display = 'none';
                     if (noteEl) noteEl.textContent = '';
                     if (window.debugMode) {
-                        throw new Error('デバッグモード: 合成エラー');
+                        latestImageData = buildPlaceholderImage('合成デモ');
+                    } else {
+                        const roomImagePath = selectedRoom.path.replace(/^\//, '');
+                        const sofaImagePath = composeSofaPath.replace(/^\//, '');
+                        const response = await fetch('/api/compose', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ roomImagePath, sofaImagePath }),
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            throw new Error(data.detail || data.error || '合成に失敗しました');
+                        }
+                        if (!data.image) {
+                            throw new Error('画像が生成されませんでした');
+                        }
+                        latestImageData = `data:${data.image.mimeType};base64,${data.image.data}`;
                     }
-                    const roomImagePath = selectedRoom.path.replace(/^\//, '');
-                    const sofaImagePath = composeSofaPath.replace(/^\//, '');
-                    const response = await fetch('/api/compose', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ roomImagePath, sofaImagePath }),
-                    });
-                    const data = await response.json();
-                    if (!response.ok) {
-                        throw new Error(data.detail || data.error || '合成に失敗しました');
-                    }
-                    if (!data.image) {
-                        throw new Error('画像が生成されませんでした');
-                    }
-                    latestImageData = `data:${data.image.mimeType};base64,${data.image.data}`;
                     if (resultImg) {
                         resultImg.src = latestImageData;
                         resultImg.style.display = 'block';

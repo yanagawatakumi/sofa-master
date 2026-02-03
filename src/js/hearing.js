@@ -71,11 +71,23 @@
 
     async function fetchQuestions() {
         if (window.debugMode) {
-            throw new Error('デバッグモード: 質問取得エラー');
+            return fetchQuestionsFromLocal();
         }
         const response = await fetch('/api/hearing/questions');
         if (!response.ok) {
             throw new Error('質問データの取得に失敗しました');
+        }
+        const data = await response.json();
+        state.questions = data.questions || [];
+        state.greeting = data.greeting || '';
+        state.summaryMessage = data.summary_message || '';
+        return state.questions;
+    }
+
+    async function fetchQuestionsFromLocal() {
+        const response = await fetch('data/questions.json');
+        if (!response.ok) {
+            throw new Error('ローカル質問データの取得に失敗しました');
         }
         const data = await response.json();
         state.questions = data.questions || [];
@@ -230,7 +242,23 @@
 
         try {
             if (window.debugMode) {
-                throw new Error('デバッグモード: アップロードエラー');
+                const imageData = {
+                    id: `local-${Date.now()}`,
+                    path: URL.createObjectURL(file),
+                    name: file.name || 'アップロード画像',
+                };
+                const existingPreview = roomGallery.querySelector('[data-id="uploaded-preview"]');
+                const previewItem = existingPreview || createGalleryItem({
+                    ...imageData,
+                    id: 'uploaded-preview',
+                    name: 'アップロード画像',
+                });
+                previewItem.dataset.id = 'uploaded-preview';
+                if (!existingPreview) {
+                    roomGallery.prepend(previewItem);
+                }
+                selectRoom(imageData, previewItem);
+                return;
             }
             const response = await fetch('/api/upload-room', {
                 method: 'POST',
