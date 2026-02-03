@@ -1,0 +1,96 @@
+{
+  "greeting": "はじめまして！あなたにぴったりのソファを見つけましょう。いくつか質問させてください。",
+  "questions": [
+    {
+      "id": "budget",
+      "text": "ソファのご予算はどのくらいですか？",
+      "type": "single_select",
+      "options": [
+        { "value": "under_50000", "label": "〜5万円", "max": 50000 },
+        { "value": "50000_100000", "label": "5万円〜10万円", "max": 100000 },
+        { "value": "100000_200000", "label": "10万円〜20万円", "max": 200000 },
+        { "value": "200000_300000", "label": "20万円〜30万円", "max": 300000 },
+        { "value": "over_300000", "label": "30万円以上", "max": null }
+      ]
+    },
+    {
+      "id": "capacity",
+      "text": "何人でお使いになりますか？",
+      "type": "single_select",
+      "options": [
+        { "value": "1", "label": "1人（一人暮らし向け）" },
+        { "value": "2", "label": "2人（カップル・夫婦向け）" },
+        { "value": "3", "label": "3人以上（ファミリー向け）" },
+        { "value": "4", "label": "来客時にも使いたい（大人数対応）" }
+      ]
+    },
+    {
+      "id": "space",
+      "text": "ソファを置くスペースの幅はどのくらいですか？",
+      "type": "single_select",
+      "options": [
+        { "value": "under_150", "label": "〜150cm（コンパクト）", "max_width": 150 },
+        { "value": "150_200", "label": "150cm〜200cm（標準）", "max_width": 200 },
+        { "value": "200_250", "label": "200cm〜250cm（ゆったり）", "max_width": 250 },
+        { "value": "over_250", "label": "250cm以上（広々）", "max_width": null },
+        { "value": "unknown", "label": "わからない", "max_width": null }
+      ]
+    },
+    {
+      "id": "style",
+      "text": "お好みのインテリアスタイルは？（2つまで選択可）",
+      "type": "multi_select",
+      "max_selections": 2,
+      "options": [
+        { "value": "modern", "label": "モダン" },
+        { "value": "nordic", "label": "北欧" },
+        { "value": "natural", "label": "ナチュラル" },
+        { "value": "classic", "label": "クラシック・アンティーク" },
+        { "value": "industrial", "label": "インダストリアル" },
+        { "value": "japanese_modern", "label": "和モダン" },
+        { "value": "any", "label": "特にこだわりなし" }
+      ]
+    },
+    {
+      "id": "material",
+      "text": "お好みの素材はどれですか？",
+      "type": "single_select",
+      "options": [
+        { "value": "leather", "label": "本革" },
+        { "value": "synthetic_leather", "label": "合皮・PUレザー" },
+        { "value": "fabric", "label": "ファブリック" },
+        { "value": "any", "label": "こだわりなし" }
+      ]
+    },
+    {
+      "id": "color",
+      "text": "お好みのカラー系統は？（2つまで選択可）",
+      "type": "multi_select",
+      "max_selections": 2,
+      "options": [
+        { "value": "beige", "label": "ベージュ・アイボリー系" },
+        { "value": "gray", "label": "グレー系" },
+        { "value": "brown", "label": "ブラウン系" },
+        { "value": "black", "label": "ブラック系" },
+        { "value": "navy", "label": "ネイビー・ブルー系" },
+        { "value": "green", "label": "グリーン系" },
+        { "value": "any", "label": "その他・こだわりなし" }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "text": "当てはまるものを全て選んでください（複数選択可）",
+      "type": "multi_select",
+      "max_selections": null,
+      "options": [
+        { "value": "kids", "label": "小さなお子様がいる" },
+        { "value": "pets", "label": "ペットを飼っている" },
+        { "value": "sleep", "label": "ソファで寝ることがある" },
+        { "value": "storage", "label": "収納付きが良い" },
+        { "value": "reclining", "label": "リクライニング機能が欲しい" },
+        { "value": "none", "label": "特になし" }
+      ]
+    }
+  ],
+  "summary_message": "ありがとうございます！以下の条件でおすすめソファを探します。"
+}

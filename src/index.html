@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ソファマスター - Sofa Recommendation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-inner">
+                <p class="eyebrow">Sofa Master</p>
+                <h1>あなたの部屋に、ぴったりの一台を。</h1>
+                <p class="hero-lead">好み・予算・ライフスタイルから最適なソファを提案し、部屋写真でイメージまで確認できます。</p>
+            </div>
+            <div class="debug-toggle">
+                <span>Debug</span>
+                <label class="switch">
+                    <input type="checkbox" id="debug-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </header>
+
+        <main class="content">
+            <section class="progress">
+                <div class="progress-head">
+                    <span id="progress-label">Step 1 / 2</span>
+                    <span class="progress-title">ヒアリング → 提案</span>
+                </div>
+                <div class="progress-rail">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </section>
+
+            <!-- Step 1: ヒアリング -->
+            <section class="step-section is-active" data-step="1">
+                <div class="step-header">
+                    <h2>Step 1: ヒアリング</h2>
+                    <p>質問に答えるだけで、あなたに合うソファを絞り込みます。</p>
+                </div>
+                <div class="hearing-layout">
+                    <div class="hearing-chat" id="hearing-chat"></div>
+                    <div class="hearing-actions">
+                        <div class="hearing-choices" id="hearing-choices"></div>
+                        <button class="primary-btn" id="hearing-next-btn" disabled>次へ</button>
+                    </div>
+                </div>
+                <div class="room-selection" id="room-selection">
+                    <h3>部屋画像をアップロード</h3>
+                    <p>実際のお部屋に置いたイメージを見ることができます。ぜひ、ご自身の部屋写真をアップロードしてみてください。</p>
+                    <div class="room-upload" id="room-upload"></div>
+                    <p class="room-alt">または、既存画像を利用して合成する</p>
+                    <div class="image-gallery" id="room-gallery"></div>
+                    <button class="primary-btn" id="hearing-submit-btn" disabled>おすすめを見る</button>
+                </div>
+            </section>
+
+            <!-- Step 2: おすすめ提案 -->
+            <section class="step-section" data-step="2">
+                <div class="step-header">
+                    <h2>Step 2: おすすめ提案</h2>
+                    <p>条件に合うソファをスコア順に表示します。</p>
+                </div>
+                <div class="recommend-header">
+                    <p class="recommend-message" id="recommend-message"></p>
+                    <div class="recommend-actions">
+                        <button class="secondary-btn" id="recommend-back-btn">ヒアリングに戻る</button>
+                    </div>
+                </div>
+                <div class="recommend-list" id="recommend-list"></div>
+                <div class="recommend-empty" id="recommend-empty">
+                    <p>条件に合うソファが見つかりませんでした。</p>
+                </div>
+            </section>
+
+            
+        </main>
+
+        <footer>
+            <p>© 2026 ソファマスター</p>
+        </footer>
+    </div>
+
+    <div class="modal" id="sofa-modal" aria-hidden="true">
+        <div class="modal-backdrop" id="sofa-modal-backdrop"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="sofa-modal-title">
+            <button class="modal-close" id="sofa-modal-close">閉じる</button>
+            <div class="modal-body" id="sofa-modal-body"></div>
+        </div>
+    </div>
+
+    <script src="js/hearing.js"></script>
+    <script src="js/recommend.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
